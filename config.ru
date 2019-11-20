@@ -1,7 +1,3 @@
-run Proc.new { |env|
-  [
-    '200',
-    {'Content-Type' => 'text/html'},
-    ['Hello']
-  ]
-}
+require './hello'
+
+run Sinatra::Application
