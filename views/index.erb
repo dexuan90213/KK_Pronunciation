@@ -1,0 +1,17 @@
+<p>單字數量：<%= @list.count %></p>
+
+<div class="kk">
+  <ul>
+    <% @list.each do |word|  %>
+      <li><%= word %></li>
+    <% end %>
+  </ul>
+
+  <ul>
+    <% @result.each do |word|  %>
+      <li><%= word %></li>
+    <% end %>
+  </ul>
+</div>
+
+<p>Time: <%= @sss %></p>
