@@ -9,7 +9,7 @@ end
 
 get '/yahoodictest' do
 
-  list =  %w(video find honey stop half just quarter lie sleepwalk housework sweep mop  wipe window  mat someone laugh move body shape scared still dream eye sound future job act actress actor memorize line enough teach reporter interview businessman fisherman try pose age start begin create company become team different perfect popular share keep right library soon until noon hospital stomachache skip important stomach hurt sick rest late tomorrow fever cough headache diary stay junk food tell regular healthy health decide difficult way cold high from now on)
+  list =  %w(video find honey stop half just quarter lie sleepwalk housework sweep mop  wipe window  mat someone laugh move body shape scared still dream eye sound future job act actress)
   result = []
   
   sss = Benchmark.measure do
