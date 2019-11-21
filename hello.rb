@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/reloader' if development?
 require 'net/http'
 require 'nokogiri'
 require 'benchmark'
@@ -90,7 +91,36 @@ get '/w86' do
 
 end
 
+get '/search'do
+ erb :search, layout: :my_layout 
+end
 
+post '/search' do
+  @list = params[:words].strip.split("\r\n")
+  @result = []
+
+  @sss = Benchmark.measure do
+    hydra = Typhoeus::Hydra.new
+    requests = @list.map { |word| 
+      request = Typhoeus::Request.new("https://tw.dictionary.search.yahoo.com/search?p=#{word}", followlocation: true)
+      hydra.queue(request) 
+      request
+    }
+    hydra.run
+    responses = requests.map { |r| r.response.response_body } 
+
+    
+    responses.each do |response|
+      doc = Nokogiri::HTML(response)
+
+      kk = doc.css('div.compList ul li span.fz-14').first.content
+      @result << (kk.delete 'KK')
+    end
+  end
+
+    erb :index, layout: :my_layout
+
+end
 
 
 def ddd
