@@ -30,7 +30,6 @@ get '/yahoodictest' do
 
   # "<h3>單字數量：#{list.count}</h3><br> <p>#{list}</p><br>" + 
     # "<ul><% re</ul>" +  "----- #{sss}"
-
 end
 
 get '/typhoeus' do
