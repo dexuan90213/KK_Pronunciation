@@ -5,9 +5,9 @@ require 'nokogiri'
 require 'benchmark'
 require 'typhoeus'
 
-get '/' do
-  "Hello Sinatra"
-end
+# get '/' do
+#   "Hello Sinatra"
+# end
 
 get '/yahoodictest' do
 
@@ -91,10 +91,12 @@ get '/w86' do
 
 end
 
-get '/search'do
-  @list = []
-  @result = []
-  erb :search, layout: :my_layout 
+['/', '/search'].each do |path|
+  get path do
+    @list = []
+    @result = []
+    erb :search, layout: :my_layout 
+  end
 end
 
 post '/search' do
