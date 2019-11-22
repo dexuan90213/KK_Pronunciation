@@ -92,7 +92,9 @@ get '/w86' do
 end
 
 get '/search'do
- erb :search, layout: :my_layout 
+  @list = []
+  @result = []
+  erb :search, layout: :my_layout 
 end
 
 post '/search' do
@@ -125,7 +127,7 @@ post '/search' do
     end
   end
 
-    erb :index, layout: :my_layout
+    erb :search, layout: :my_layout
 
 end
 
