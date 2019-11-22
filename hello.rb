@@ -113,8 +113,15 @@ post '/search' do
     responses.each do |response|
       doc = Nokogiri::HTML(response)
 
-      kk = doc.css('div.compList ul li span.fz-14').first.content
-      @result << (kk.delete 'KK')
+      kk = doc.css('div.compList ul li span.fz-14')
+
+      if kk.empty? 
+        @result << "沒有 KK 音標"
+      elsif not kk.first.content.include?("KK")
+        @result << "沒有 KK 音標"
+      else
+        @result << (kk.first.content.delete 'KK')
+      end
     end
   end
 
