@@ -91,15 +91,13 @@ get '/w86' do
 
 end
 
-['/', '/search'].each do |path|
-  get path do
+get '/' do
     @list = []
     @result = []
     erb :search, layout: :my_layout 
   end
-end
 
-post '/search' do
+post '/' do
   @list = params[:words].strip.split("\r\n")
   @result = []
 
@@ -132,6 +130,46 @@ post '/search' do
     erb :search, layout: :my_layout
 
 end
+
+get '/search' do
+  erb :index, layout: :my_layout
+end
+
+post '/search' do
+  return "#{params}"
+  @list = params[:words].strip.split("\r\n")
+  @result = []
+
+  @sss = Benchmark.measure do
+    hydra = Typhoeus::Hydra.new
+    requests = @list.map { |word|
+      request = Typhoeus::Request.new("https://tw.dictionary.search.yahoo.com/search?p=#{word}", followlocation: true)
+      hydra.queue(request)
+      request
+    }
+    hydra.run
+    responses = requests.map { |r| r.response.response_body }
+
+
+    responses.each do |response|
+      doc = Nokogiri::HTML(response)
+
+      kk = doc.css('div.compList ul li span.fz-14')
+
+      if kk.empty?
+        @result << "沒有 KK 音標"
+      elsif not kk.first.content.include?("KK")
+        @result << "沒有 KK 音標"
+      else
+        @result << (kk.first.content.delete 'KK')
+      end
+    end
+  end
+
+    erb :index, layout: :my_layout
+
+end
+
 
 
 def ddd
