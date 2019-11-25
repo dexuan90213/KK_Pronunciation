@@ -16,7 +16,11 @@
 
   <ul>
     <% @result.each do |word|  %>
-      <li><%= word %></li>
+      <% if word.class != Array %>
+        <li><%= word %></li>
+      <% else %>
+        <li><%= "#{word.join(" ")}"%></li>
+      <% end %>
     <% end %>
   </ul>
 </div>

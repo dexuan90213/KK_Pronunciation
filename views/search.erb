@@ -10,7 +10,7 @@
     
     <div class="column is-3">
       <div class="control">
-        <textarea name="result" rows="10" class="textarea is-primary"><% @result.each do |kk| %><%= "#{kk}\r\n" %><% end %></textarea>
+        <textarea name="result" rows="10" class="textarea is-primary"><% @result.each do |kk| %><% if kk.class != Array %><%= "#{kk}\r\n" %><% else %><%= "[#{kk.join(" ").delete("[]")}]\r\n" %><% end %><% end %></textarea>
       </div>
     </div>
   </div>
