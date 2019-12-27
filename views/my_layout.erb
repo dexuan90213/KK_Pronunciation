@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
 </head>
 <body>
   <section class="section">
@@ -11,5 +12,13 @@
       <%= yield %>
     </div>
   </section>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>
+    $('documant').ready(function () {
+      $('#submit-button').on('click', function (evt) {
+        $(evt.target).addClass("is-loading")
+      })
+    })
+  </script>
 </body>
 </html>

@@ -1,29 +1,17 @@
-<form action="/search" method="post">
-  <textarea name="words" rows="8" cols="40"></textarea>
-  <input type="submit">
+<form action="/" method="post">
+  <div class="columns is-centered is-vcentered">
+    <div class="column is-3">
+      <div class="control">
+        <textarea name="words" rows="10" placeholder="請輸入單字" class="textarea is-primary"><% @list.each do |word| %><%= "#{word}\r\n" %><% end %></textarea>
+      </div>
+    </div>
+
+    <button type="submit" id="submit-button" class="button is-primary is-large">轉</button>
+    
+    <div class="column is-3">
+      <div class="control">
+        <textarea name="result" rows="10" class="textarea is-primary"><% @result.each do |kk| %><% if kk.class != Array %><%= "#{kk}\r\n" %><% else %><%= "[#{kk.join(" ").delete("[]")}]\r\n" %><% end %><% end %></textarea>
+      </div>
+    </div>
+  </div>
 </form>
-
-
-<% if @list %>
-<p>單字數量：<%= @list.count %></p>
-
-<div class="kk">
-  <ul>
-    <% @list.each do |word|  %>
-      <li><%= word %></li>
-    <% end %>
-  </ul>
-
-  <ul>
-    <% @result.each do |word|  %>
-      <% if word.class != Array %>
-        <li><%= word %></li>
-      <% else %>
-        <li><%= "#{word.join(" ")}"%></li>
-      <% end %>
-    <% end %>
-  </ul>
-</div>
-
-<p>Time: <%= @sss %></p>
-<% end %>
