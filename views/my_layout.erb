@@ -18,9 +18,7 @@
     $('documant').ready(function () {
       $('#submit-button').on('click', function (evt) {
         $(evt.target).addClass("is-loading")
-        $('.section').loading({
-          stoppable: true
-        })
+        $('.section').loading()
       })
     })
   </script>
