@@ -15,7 +15,7 @@ post '/' do
   @result = []
 
     hydra = Typhoeus::Hydra.new
-    requests = @list.map { |word|
+    requests = @list.map do |word|
       if word.include?(" ")
         word.split(" ").map do |word|
           request = Typhoeus::Request.new("https://tw.dictionary.search.yahoo.com/search?p=#{word}", followlocation: true)
@@ -27,12 +27,12 @@ post '/' do
         hydra.queue(request)
         request
       end
-    }
+    end
 
     hydra.run
-    rrr = []
+    result = []
     
-    rrr = requests.map do |r|
+    result = requests.map do |r|
       if r.class != Array
         r.response.response_body
       else
@@ -40,12 +40,9 @@ post '/' do
       end
     end
 
-    # return "#{rrr}"
-
-    rrr.each do |response|
+    result.each do |response|
       if response.class != Array
         doc = Nokogiri::HTML(response)
-
         kk = doc.css('div.compList ul li span.fz-14')
 
         if kk.empty?
@@ -56,22 +53,22 @@ post '/' do
           @result << (kk.first.content.delete 'KK')
         end
       else
-        rrr = []
+        arr = []
         response.map do |response|
           doc = Nokogiri::HTML(response)
 
           kk = doc.css('div.compList ul li span.fz-14')
 
           if kk.empty?
-            rrr << "沒有 KK 音標"
+            arr << "沒有 KK 音標"
           elsif not kk.first.content.include?("KK")
-            rrr << "沒有 KK 音標"
+            arr << "沒有 KK 音標"
           else
-            rrr << (kk.first.content.delete 'KK')
+            arr << (kk.first.content.delete 'KK')
           end
         end
-        @result << rrr
+        @result << arr
       end
     end
-    erb :index, layout: :my_layout
+  erb :index, layout: :my_layout
 end
